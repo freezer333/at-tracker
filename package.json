@@ -1,0 +1,22 @@
+{
+  "name": "at",
+  "version": "1.0.0",
+  "description": "Page tracking for web apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freezer333/at.git"
+  },
+  "author": "Scott Frees",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freezer333/at/issues"
+  },
+  "homepage": "https://github.com/freezer333/at#readme",
+  "dependencies": {
+    "on-finished": "^2.4.1"
+  }
+}
