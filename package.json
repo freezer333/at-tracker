@@ -1,5 +1,5 @@
 {
-  "name": "at",
+  "name": "at-tracker",
   "version": "1.0.0",
   "description": "Page tracking for web apps",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/freezer333/at.git"
+    "url": "git+https://github.com/freezer333/at-tracker.git"
   },
   "author": "Scott Frees",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/freezer333/at/issues"
+    "url": "https://github.com/freezer333/at-tracker/issues"
   },
-  "homepage": "https://github.com/freezer333/at#readme",
+  "homepage": "https://github.com/freezer333/at-tracker#readme",
   "dependencies": {
     "on-finished": "^2.4.1"
   }
