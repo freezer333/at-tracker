@@ -19,6 +19,9 @@ The middleware records the the following on each request:
 const store = {
     save: (tracker) => {
         console.log(`@: `, tracker.method, tracker.url, tracker.statusCode, tracker.user ? `User=${tracker.user.id}`: null);
+    }, 
+    clean: () => {
+        console.log(`@: Cleaned`);
     }
 }
 const at = (app, options = {store: store, user: req => null, ttl: 30 * 24 * 60 * 60 * 1000}) => {
@@ -58,6 +61,8 @@ const at = (app, options = {store: store, user: req => null, ttl: 30 * 24 * 60 *
         next();
     };
     app.use(m);
+    // Clean up expired trackers
+    setInterval(_store.clean, 60 * 60 * 1000);
 }
 
 module.exports = at;
