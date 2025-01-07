@@ -24,10 +24,11 @@ const store = {
         console.log(`@: Cleaned`);
     }
 }
-const at = (app, options = { store: store, user: req => null, ttl: 30 * 24 * 60 * 60 * 1000, persist: (p) => p }) => {
+const at = (app, options = { store: store, user: req => null, ttl: 30 * 24 * 60 * 60 * 1000, persist: (p) => p, filter: (p) => true }) => {
     const _store = options.store || store;
     const _ttl = options.ttl || 30 * 24 * 60 * 60 * 1000;
     const _persist = options.persist || (p => p);
+    const _filter = options.filter || (p => true);
     const m = (req, res, next) => {
         const tracker = {
             url: req.url,
@@ -57,7 +58,8 @@ const at = (app, options = { store: store, user: req => null, ttl: 30 * 24 * 60 
             tracker.resHeaders = res.getHeaders();
             // Add the status code
             tracker.statusCode = res.statusCode;
-            _store.save(_persist(tracker));
+            if (_filter(tracker))
+                _store.save(_persist(tracker));
         });
         next();
     };
