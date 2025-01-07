@@ -18,15 +18,16 @@ The middleware records the the following on each request:
 */
 const store = {
     save: (tracker) => {
-        console.log(`@: `, tracker.method, tracker.url, tracker.statusCode, tracker.user ? `User=${tracker.user.id}`: null);
-    }, 
+        console.log(`@: `, tracker.method, tracker.url, tracker.statusCode, tracker.user ? `User=${tracker.user.id}` : null);
+    },
     clean: () => {
         console.log(`@: Cleaned`);
     }
 }
-const at = (app, options = {store: store, user: req => null, ttl: 30 * 24 * 60 * 60 * 1000}) => {
+const at = (app, options = { store: store, user: req => null, ttl: 30 * 24 * 60 * 60 * 1000, persist: (p) => p }) => {
     const _store = options.store || store;
     const _ttl = options.ttl || 30 * 24 * 60 * 60 * 1000;
+    const _persist = options.persist || (p => p);
     const m = (req, res, next) => {
         const tracker = {
             url: req.url,
@@ -45,9 +46,9 @@ const at = (app, options = {store: store, user: req => null, ttl: 30 * 24 * 60 *
         req.at = tracker;
         res.at = tracker;
         // Set at_id cookie, with no expiration
-        res.cookie('at', tracker.at, {httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV === 'production'});
+        res.cookie('at', tracker.at, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV === 'production' });
 
-        onFinished(res, function(err, res) {
+        onFinished(res, function (err, res) {
             if (err) {
                 tracker.error = err;
             }
@@ -56,7 +57,7 @@ const at = (app, options = {store: store, user: req => null, ttl: 30 * 24 * 60 *
             tracker.resHeaders = res.getHeaders();
             // Add the status code
             tracker.statusCode = res.statusCode;
-            _store.save(tracker);
+            _store.save(_persist(tracker));
         });
         next();
     };
