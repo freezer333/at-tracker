@@ -1,6 +1,6 @@
 {
   "name": "at-tracker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Page tracking for web apps",
   "main": "index.js",
   "scripts": {

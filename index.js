@@ -65,7 +65,7 @@ const at = (app, options = { store: store, user: req => null, ttl: 30 * 24 * 60 
     };
     app.use(m);
     // Clean up expired trackers
-    setInterval(_store.clean, 60 * 60 * 1000);
+    setInterval(() => { _store.clean(); }, 60 * 60 * 1000);
 }
 
 module.exports = at;
